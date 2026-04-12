@@ -30,7 +30,7 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     FText Description;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (TitleProperty = "ObjectiveDesignerDescription"))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (TitleProperty = "Title"))
     TArray<FObjectiveData> Objectives;
 };
 

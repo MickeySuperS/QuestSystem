@@ -8,6 +8,9 @@
 
 #include "NQuestSubsystem.generated.h"
 
+//Delegates
+
+
 class UNQuestData;
 class UNQuestInstance;
 struct FNQuestCompleted;
@@ -25,7 +28,7 @@ protected:
 	TSet<TObjectPtr<UNQuestInstance>> ActiveQuests;
 
 	UPROPERTY()
-	TMap<FGameplayTag, TObjectPtr<UNQuestInstance>> ActiveSpecialQuests;
+	TMap<FGameplayTag, TObjectPtr<UNQuestInstance>> ActiveQuestsMap;
 
 	UPROPERTY()
 	TArray<FNQuestCompleted> CompletedQuests;

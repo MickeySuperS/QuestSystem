@@ -7,6 +7,13 @@
 
 UNQuestInstance *UNQuestSubsystem::CreateQuestInstance(UObject* Owner, UNQuestData *QuestAsset)
 {
+    if (!IsValid(QuestAsset) || !QuestAsset->QuestID.IsValid())
+    {
+        //@@TODO(mickey): Get Asset Name
+        UE_LOG(LogNQuest, Log, TEXT("Failed to Create Quest: %s"), *QuestAsset->Title.ToString());
+        return nullptr;
+    }
+
     UNQuestInstance* NewInstance = NewObject<UNQuestInstance>(this);
 	NewInstance->InitializeInstance(Owner, *QuestAsset);
 
@@ -15,17 +22,13 @@ UNQuestInstance *UNQuestSubsystem::CreateQuestInstance(UObject* Owner, UNQuestDa
 
 void UNQuestSubsystem::StartQuest(UNQuestInstance* Quest)
 {
-    if (!IsValid(Quest))
+    if (!IsValid(Quest) || !Quest->QuestID.IsValid())
     {
         return;
     }
 
     ActiveQuests.Emplace(Quest);
-
-    if (Quest->QuestID.IsValid())
-    {
-        ActiveSpecialQuests.Add(Quest->QuestID, Quest);
-    }
+    ActiveQuestsMap.Add(Quest->QuestID, Quest);
 
     UE_LOG(LogNQuest, Log, TEXT("Starting Quest: %s"), *Quest->Title.ToString());
 }
@@ -42,6 +45,8 @@ bool UNQuestSubsystem::FinishQuest(const UNQuestInstance* Quest)
         }
     );
 
+    UE_LOG(LogNQuest, Log, TEXT("Completed Quest: %s"), *Quest->Title.ToString());
+
     return true;
 }
 
@@ -57,10 +62,13 @@ void UNQuestSubsystem::EvaluateQuests()
             continue;
         }
 
+        Quest->Evaluate();
+
         if (Quest->IsCompleted())
         {
-            It.RemoveCurrent();
             FinishQuest(Quest);
+            ActiveQuestsMap.Remove(Quest->QuestID);
+            It.RemoveCurrent();
             continue;
         }
     }

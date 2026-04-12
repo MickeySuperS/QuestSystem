@@ -38,7 +38,8 @@ public class NoutQuest : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
-				"GameplayTags"
+				"GameplayTags",
+				"Projects"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

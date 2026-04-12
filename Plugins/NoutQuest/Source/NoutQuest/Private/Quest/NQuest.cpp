@@ -3,6 +3,7 @@
 #include "Quest/NQuest.h"
 #include "Quest/NObjective.h"
 #include "Conditions/NConditionBase.h"
+#include "NQuestLog.h"
 
 /////////////////////// NQuestInstance ////////////////////////
 
@@ -20,6 +21,7 @@ void UNQuestInstance::InitializeInstance(UObject* InOwner, UNQuestData& QuestTem
     for (const FObjectiveData& ObjectiveTemplate : QuestTemplate.Objectives)
     {
         FObjectiveData NewObjective;
+        NewObjective.Title = ObjectiveTemplate.Title;
 
         for (const TObjectPtr<UNConditionBase>& Condition : ObjectiveTemplate.Conditions)
         {
@@ -45,12 +47,22 @@ bool UNQuestInstance::Evaluate()
         return true;
     }
 
+    if (Objectives.IsEmpty())
+    {
+         bIsCompleted = true;
+         return true;
+    }
+
     if (!Objectives[CurrentObjectiveInstance].IsCompleted())
     {
         return false;
     }
 
-    if (Objectives.IsValidIndex(++CurrentObjectiveInstance))
+    UE_LOG(LogNQuest, Log, TEXT("Objective Completed: %s for Quest: %s"), 
+        *Objectives[CurrentObjectiveInstance].Title.ToString(), 
+        *Title.ToString());
+
+    if (!Objectives.IsValidIndex(++CurrentObjectiveInstance))
     {
         bIsCompleted = true;
     }

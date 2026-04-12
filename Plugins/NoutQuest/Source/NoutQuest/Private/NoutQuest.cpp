@@ -2,11 +2,20 @@
 
 #include "NoutQuest.h"
 
+//Engine
+#include "Interfaces/IPluginManager.h"
+#include "GameplayTagsManager.h"
+//
+
 #define LOCTEXT_NAMESPACE "FNoutQuestModule"
 
 void FNoutQuestModule::StartupModule()
 {
-	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
+	//https://github.com/tranek/GASDocumentation/issues/125
+	TSharedPtr<IPlugin> ThisPlugin = IPluginManager::Get().FindPlugin(TEXT("NoutQuest"));
+	check(ThisPlugin.IsValid());
+	
+	UGameplayTagsManager::Get().AddTagIniSearchPath(ThisPlugin->GetBaseDir() / TEXT("Config") / TEXT("Tags"));
 }
 
 void FNoutQuestModule::ShutdownModule()
