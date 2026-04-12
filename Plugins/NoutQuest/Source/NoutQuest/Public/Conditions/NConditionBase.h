@@ -2,7 +2,10 @@
 
 #pragma once
 
+//--Engine Include
 #include "CoreMinimal.h"
+//--Engine Include
+
 #include "Core/NObject.h"
 
 #include "NConditionBase.generated.h"

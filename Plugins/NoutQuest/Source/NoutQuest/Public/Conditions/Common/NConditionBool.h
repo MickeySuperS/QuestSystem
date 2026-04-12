@@ -2,7 +2,10 @@
 
 #pragma once
 
+//--Engine Include
 #include "CoreMinimal.h"
+//--Engine Include
+
 #include "Conditions/NConditionBase.h"
 
 #include "NConditionBool.generated.h"
@@ -29,5 +32,5 @@ public:
     UPROPERTY(Category="Default", EditAnywhere, BlueprintReadWrite)
     ENBoolOperation BoolOperation = ENBoolOperation::EQUAL;
 
-	virtual bool Evaluate_Implementation() const override {return true;}
+	virtual bool Evaluate_Implementation() const override { return true; }
 };
