@@ -1,5 +1,7 @@
 // Copyright MickeySuperS
 
+#pragma once
+
 //Engine
 #include "GameFramework/Actor.h"
 #include "GameplayTagContainer.h"

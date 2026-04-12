@@ -4,6 +4,7 @@
 
 #include "Quest/NQuest.h"
 #include "NQuestLog.h"
+#include "Rewards/NRewardBase.h"
 
 UNQuestInstance *UNQuestSubsystem::CreateQuestInstance(UObject* Owner, UNQuestData *QuestAsset)
 {
@@ -35,7 +36,11 @@ void UNQuestSubsystem::StartQuest(UNQuestInstance* Quest)
 
 bool UNQuestSubsystem::FinishQuest(const UNQuestInstance* Quest)
 {
-    //@@TODO(mickey): Give Rewards
+    for (const TObjectPtr<class UNRewardBase>& Reward : Quest->TemplateAsset->Rewards)
+    {
+        if (!IsValid(Reward)) { continue; }
+        Reward->GiveReward(Quest->Owner);
+    }
 
     CompletedQuests.Emplace(
         FNQuestCompleted{

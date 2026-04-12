@@ -11,6 +11,7 @@
 #include "NQuest.generated.h"
 
 struct FObjectiveData;
+class UNRewardBase;
 
 /////////////////////// Data Asset ////////////////////////
 
@@ -32,6 +33,10 @@ public:
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (TitleProperty = "Title"))
     TArray<FObjectiveData> Objectives;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Instanced, meta = (TitleProperty = "DesignerDescription"))
+    TArray<TObjectPtr<class UNRewardBase>> Rewards;
+
 };
 
 /////////////////////// Quest Instance ////////////////////////
@@ -61,8 +66,6 @@ public:
 
     UPROPERTY()
     TObjectPtr<UObject> Owner;
-
-
 
 protected:
 
