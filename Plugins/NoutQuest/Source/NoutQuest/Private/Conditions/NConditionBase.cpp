@@ -2,12 +2,18 @@
 
 #include "Conditions/NConditionBase.h"
 
+#include "NQuestSubsystem.h"
+
+//Engine
+#include "GameplayTagContainer.h"
+//
+
 bool UNConditionBase::EvaluateInternal_Implementation() const
 {
     return false;
 }
 
-bool UNConditionBase::Evaluate()
+bool UNConditionBase::Evaluate(FGameplayTag QuestID)
 {
     if (bIsCompleted)
     {
@@ -15,6 +21,16 @@ bool UNConditionBase::Evaluate()
     }
 
     bIsCompleted = EvaluateInternal();
+    if (bIsCompleted)
+    {
+        // Fire Condition Delegate
+        if (UGameInstance* GameInstance = GetWorld()->GetGameInstance())
+        {
+            UNQuestSubsystem* QuestSubsystem = GameInstance->GetSubsystem<UNQuestSubsystem>();
+            QuestSubsystem->OnConditionCompleted.Broadcast(QuestID);
+        }
+    }
+
     return bIsCompleted;
 }
 

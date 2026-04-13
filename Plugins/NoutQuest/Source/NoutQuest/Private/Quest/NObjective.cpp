@@ -4,7 +4,7 @@
 
 #include "Conditions/NConditionBase.h"
 
-bool FObjectiveData::Evaluate()
+bool FObjectiveData::Evaluate(FGameplayTag QuestID)
 {
     if (bIsCompleted)
     {
@@ -19,15 +19,7 @@ bool FObjectiveData::Evaluate()
             continue;
         }
 
-        const bool oldCompletionState = Condition->IsCompleted();
-        const bool newCompletionState = Condition->Evaluate();
-  
-        if (!oldCompletionState && newCompletionState)
-        {
-            //@@TODO(mickey): State change, Fire Delegate Condition Completed
-        }
-
-        isCompleted &= newCompletionState;
+        isCompleted &= Condition->Evaluate(QuestID);
     }
 
     bIsCompleted = isCompleted;

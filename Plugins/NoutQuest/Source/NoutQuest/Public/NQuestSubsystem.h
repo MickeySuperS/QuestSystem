@@ -8,16 +8,14 @@
 #include "Subsystems/GameInstanceSubsystem.h"
 //
 
+#include "Quest/NQuest.h"
+
 #include "NQuestSubsystem.generated.h"
 
 //Delegates
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FQuestEvent);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTaggedQuestEvent, const FGameplayTag&, QuestTags);
 
-
-class UNQuestData;
-class UNQuestInstance;
-struct FNQuestCompleted;
 
 UCLASS()
 class NOUTQUEST_API UNQuestSubsystem : public UGameInstanceSubsystem

@@ -1,9 +1,11 @@
 // Copyright MickeySuperS
 
 #include "Quest/NQuest.h"
+
 #include "Quest/NObjective.h"
 #include "Conditions/NConditionBase.h"
 #include "NQuestLog.h"
+#include "NQuestSubsystem.h"
 
 /////////////////////// NQuestInstance ////////////////////////
 
@@ -53,13 +55,18 @@ bool UNQuestInstance::Evaluate()
          return true;
     }
 
-    Objectives[CurrentObjectiveInstance].Evaluate();
+    Objectives[CurrentObjectiveInstance].Evaluate(QuestID);
 
     if (!Objectives[CurrentObjectiveInstance].IsCompleted())
     {
         return false;
     }
 
+    if (UGameInstance* GameInstance = GetWorld()->GetGameInstance())
+    {
+        UNQuestSubsystem* QuestSubsystem = GameInstance->GetSubsystem<UNQuestSubsystem>();
+        QuestSubsystem->OnObjectiveCompleted.Broadcast(QuestID);
+    }
     UE_LOG(LogNQuest, Log, TEXT("Objective Completed: %s for Quest: %s"), 
         *Objectives[CurrentObjectiveInstance].Title.ToString(), 
         *Title.ToString());

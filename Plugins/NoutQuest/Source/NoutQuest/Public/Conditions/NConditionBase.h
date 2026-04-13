@@ -4,6 +4,7 @@
 
 //--Engine Include
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 //--Engine Include
 
 #include "Core/NObject.h"
@@ -32,7 +33,7 @@ public:
     bool EvaluateInternal() const;
 
     UFUNCTION(Category = "Quest", BlueprintCallable)
-    bool Evaluate();
+    bool Evaluate(FGameplayTag QuestID);
 
     UFUNCTION(Category = "Quest", BlueprintCallable)
     bool IsCompleted() const;
