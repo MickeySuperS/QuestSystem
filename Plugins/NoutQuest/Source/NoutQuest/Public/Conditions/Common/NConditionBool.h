@@ -17,6 +17,9 @@ class NOUTQUEST_API UNConditionBool : public UNConditionBase
 
 public:
 
+    UPROPERTY()
+    bool LeftHandSide = true;
+
     UPROPERTY(Category="Default", EditAnywhere, BlueprintReadWrite)
     bool RightHandSide = true;
 
@@ -24,7 +27,12 @@ public:
     bool Invert = false;
 
     UFUNCTION(Category="Condition", BlueprintNativeEvent, BlueprintCallable)
-    bool GetLeftHandSide() const;
+    bool EvaluateLeftHandSide() const;
 
-	virtual bool EvaluateInternal_Implementation() const override;
+    UFUNCTION(Category="Condition", BlueprintCallable)
+    bool GetLeftHandSide() const { return LeftHandSide; }
+
+	virtual bool EvaluateInternal_Implementation() override;
+
+    virtual FText GetDisplayText_Implementation() const override;
 };

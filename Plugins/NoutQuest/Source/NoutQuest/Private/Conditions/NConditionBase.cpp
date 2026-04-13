@@ -8,12 +8,17 @@
 #include "GameplayTagContainer.h"
 //
 
-bool UNConditionBase::EvaluateInternal_Implementation() const
+FText UNConditionBase::GetDisplayText_Implementation() const
+{
+    return FText::FromString("Invalid Condition!, Override GetDisplayText()");
+}
+
+bool UNConditionBase::EvaluateInternal_Implementation()
 {
     return false;
 }
 
-bool UNConditionBase::Evaluate(FGameplayTag QuestID)
+bool UNConditionBase::Evaluate()
 {
     if (bIsCompleted)
     {

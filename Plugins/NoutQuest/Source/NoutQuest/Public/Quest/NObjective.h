@@ -28,7 +28,7 @@ struct NOUTQUEST_API FObjectiveData
 
 public:
 
-    bool Evaluate(struct FGameplayTag QuestID);
+    bool Evaluate();
     bool IsCompleted() const;
 
 };

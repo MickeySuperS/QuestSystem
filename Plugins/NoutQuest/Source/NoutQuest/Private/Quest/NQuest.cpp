@@ -33,6 +33,7 @@ void UNQuestInstance::InitializeInstance(UObject* InOwner, UNQuestData& QuestTem
                     Condition,
                     this
                 );
+                NewCondition->QuestID = QuestID;
 
                 NewObjective.Conditions.Add(NewCondition);
             }
@@ -55,18 +56,13 @@ bool UNQuestInstance::Evaluate()
          return true;
     }
 
-    Objectives[CurrentObjectiveInstance].Evaluate(QuestID);
+    Objectives[CurrentObjectiveInstance].Evaluate();
 
     if (!Objectives[CurrentObjectiveInstance].IsCompleted())
     {
         return false;
     }
 
-    if (UGameInstance* GameInstance = GetWorld()->GetGameInstance())
-    {
-        UNQuestSubsystem* QuestSubsystem = GameInstance->GetSubsystem<UNQuestSubsystem>();
-        QuestSubsystem->OnObjectiveCompleted.Broadcast(QuestID);
-    }
     UE_LOG(LogNQuest, Log, TEXT("Objective Completed: %s for Quest: %s"), 
         *Objectives[CurrentObjectiveInstance].Title.ToString(), 
         *Title.ToString());
@@ -74,6 +70,13 @@ bool UNQuestInstance::Evaluate()
     if (!Objectives.IsValidIndex(++CurrentObjectiveInstance))
     {
         bIsCompleted = true;
+    }
+
+    // Broadcast done after setting index and iscompleted to update UI
+    if (UGameInstance* GameInstance = GetWorld()->GetGameInstance())
+    {
+        UNQuestSubsystem* QuestSubsystem = GameInstance->GetSubsystem<UNQuestSubsystem>();
+        QuestSubsystem->OnObjectiveCompleted.Broadcast(QuestID);
     }
     return bIsCompleted;
 }

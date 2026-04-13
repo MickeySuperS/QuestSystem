@@ -25,15 +25,21 @@ public:
 #endif
 
     UPROPERTY(Category = "Quest", BlueprintReadOnly, VisibleAnywhere)
+    FGameplayTag QuestID;
+
+    UPROPERTY(Category = "Quest", BlueprintReadOnly, VisibleAnywhere)
     bool bIsCompleted = false;
 
 public:
 
     UFUNCTION(Category = "Quest", BlueprintNativeEvent, BlueprintCallable)
-    bool EvaluateInternal() const;
+    FText GetDisplayText() const;
+
+    UFUNCTION(Category = "Quest", BlueprintNativeEvent, BlueprintCallable)
+    bool EvaluateInternal();
 
     UFUNCTION(Category = "Quest", BlueprintCallable)
-    bool Evaluate(FGameplayTag QuestID);
+    bool Evaluate();
 
     UFUNCTION(Category = "Quest", BlueprintCallable)
     bool IsCompleted() const;

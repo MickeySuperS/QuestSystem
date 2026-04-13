@@ -4,7 +4,7 @@
 
 #include "Conditions/NConditionBase.h"
 
-bool FObjectiveData::Evaluate(FGameplayTag QuestID)
+bool FObjectiveData::Evaluate()
 {
     if (bIsCompleted)
     {
@@ -19,7 +19,7 @@ bool FObjectiveData::Evaluate(FGameplayTag QuestID)
             continue;
         }
 
-        isCompleted &= Condition->Evaluate(QuestID);
+        isCompleted &= Condition->Evaluate();
     }
 
     bIsCompleted = isCompleted;

@@ -16,6 +16,8 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FQuestEvent);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTaggedQuestEvent, const FGameplayTag&, QuestTags);
 
+//@@TODO(mickey): LyraBus for custom refresh per condition using tags
+
 
 UCLASS()
 class NOUTQUEST_API UNQuestSubsystem : public UGameInstanceSubsystem

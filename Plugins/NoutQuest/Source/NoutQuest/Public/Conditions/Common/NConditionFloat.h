@@ -31,14 +31,23 @@ class NOUTQUEST_API UNConditionFloat : public UNConditionBase
     GENERATED_BODY()
 
 public:
+
+    UPROPERTY()
+	float LeftHandSide = 0.f;
+
     UPROPERTY(Category="Default", EditAnywhere, BlueprintReadWrite)
     float RightHandSide = 0.f;
 
     UPROPERTY(Category="Default", EditAnywhere, BlueprintReadWrite)
     ENumericalCheck Operator = ENumericalCheck::Equal;
 
-    UFUNCTION(Category="Condition", BlueprintNativeEvent, BlueprintCallable)
-    float GetLeftHandSide() const;
+	UFUNCTION(Category="Condition", BlueprintNativeEvent, BlueprintCallable)
+    float EvaluateLeftHandSide() const;
 
-	virtual bool EvaluateInternal_Implementation() const override;
+    UFUNCTION(Category="Condition", BlueprintCallable)
+    float GetLeftHandSide() const { return LeftHandSide; }
+
+	virtual bool EvaluateInternal_Implementation() override;
+
+	virtual FText GetDisplayText_Implementation() const override;
 };
