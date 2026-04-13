@@ -53,6 +53,8 @@ bool UNQuestInstance::Evaluate()
          return true;
     }
 
+    Objectives[CurrentObjectiveInstance].Evaluate();
+
     if (!Objectives[CurrentObjectiveInstance].IsCompleted())
     {
         return false;

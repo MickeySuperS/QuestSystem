@@ -26,5 +26,5 @@ public:
     UFUNCTION(Category="Condition", BlueprintNativeEvent, BlueprintCallable)
     bool GetLeftHandSide() const;
 
-	virtual bool Evaluate_Implementation() const override;
+	virtual bool EvaluateInternal_Implementation() const override;
 };

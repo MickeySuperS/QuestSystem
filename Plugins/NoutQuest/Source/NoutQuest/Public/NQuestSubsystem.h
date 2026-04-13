@@ -11,6 +11,8 @@
 #include "NQuestSubsystem.generated.h"
 
 //Delegates
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FQuestEvent);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTaggedQuestEvent, const FGameplayTag&, QuestTags);
 
 
 class UNQuestData;
@@ -27,13 +29,26 @@ public:
 
 protected:
 	UPROPERTY()
-	TSet<TObjectPtr<UNQuestInstance>> ActiveQuests;
+	TArray<TObjectPtr<UNQuestInstance>> ActiveQuests;
 
 	UPROPERTY()
 	TMap<FGameplayTag, TObjectPtr<UNQuestInstance>> ActiveQuestsMap;
 
 	UPROPERTY()
 	TArray<FNQuestCompleted> CompletedQuests;
+
+public:
+	UPROPERTY(Category = "Quest", BlueprintAssignable)
+	FTaggedQuestEvent OnQuestCreated;
+
+	UPROPERTY(Category = "Quest", BlueprintAssignable)
+	FTaggedQuestEvent OnQuestCompleted;
+
+	UPROPERTY(Category = "Quest", BlueprintAssignable)
+	FTaggedQuestEvent OnObjectiveCompleted;
+
+	UPROPERTY(Category = "Quest", BlueprintAssignable)
+	FTaggedQuestEvent OnConditionCompleted;
 
 public:
     UFUNCTION(Category = "Quest", BlueprintCallable)
@@ -47,4 +62,7 @@ public:
 
 	UFUNCTION(Category = "Quest", BlueprintCallable)
     void EvaluateQuests();
+
+	UFUNCTION(Category = "Quest", BlueprintCallable)
+    UNQuestInstance* FindQuest(FGameplayTag Tag);
 };

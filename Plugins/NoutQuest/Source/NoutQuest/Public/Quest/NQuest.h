@@ -49,30 +49,30 @@ class NOUTQUEST_API UNQuestInstance : public UObject
 public:
 
 // Quest Data
-    UPROPERTY()
+    UPROPERTY(Category = "Quest", BlueprintReadOnly, VisibleAnywhere)
     FGameplayTag QuestID;
     
-    UPROPERTY()
+    UPROPERTY(Category = "Quest", BlueprintReadOnly, VisibleAnywhere)
     FText Title;
     
-    UPROPERTY()
+    UPROPERTY(Category = "Quest", BlueprintReadOnly, VisibleAnywhere)
     FText Description;
    
-    UPROPERTY()
+    UPROPERTY(Category = "Quest", BlueprintReadOnly, VisibleAnywhere)
     TArray<struct FObjectiveData> Objectives;
 
-    UPROPERTY()
+    UPROPERTY(Category = "Quest", BlueprintReadOnly, VisibleAnywhere)
 	TObjectPtr<UNQuestData> TemplateAsset;
 
-    UPROPERTY()
+    UPROPERTY(Category = "Quest", BlueprintReadOnly, VisibleAnywhere)
     TObjectPtr<UObject> Owner;
 
 protected:
 
-    UPROPERTY()
+    UPROPERTY(Category = "Quest", BlueprintReadOnly, VisibleAnywhere)
     int32 CurrentObjectiveInstance = 0;
 
-    UPROPERTY()
+    UPROPERTY(Category = "Quest", BlueprintReadOnly, VisibleAnywhere)
     bool bIsCompleted = false;
 
 public:
@@ -81,6 +81,8 @@ public:
 	UNQuestData* GetTemplateAsset() const { return TemplateAsset; }
 
     bool Evaluate();
+
+    UFUNCTION(Category = "Quest", BlueprintCallable)
     bool IsCompleted() const;
 
 };

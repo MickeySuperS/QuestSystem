@@ -7,7 +7,7 @@ bool UNConditionBool::GetLeftHandSide_Implementation() const
     return true;
 }
 
-bool UNConditionBool::Evaluate_Implementation() const
+bool UNConditionBool::EvaluateInternal_Implementation() const
 {
     const bool EvaluationCondition = GetLeftHandSide() == RightHandSide;
     return Invert ? !EvaluationCondition : EvaluationCondition;

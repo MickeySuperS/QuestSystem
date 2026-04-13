@@ -6,6 +6,10 @@
 #include "NQuestLog.h"
 #include "Rewards/NRewardBase.h"
 
+//Engine
+#include "GameplayTagsManager.h"
+//
+
 UNQuestInstance *UNQuestSubsystem::CreateQuestInstance(UObject* Owner, UNQuestData *QuestAsset)
 {
     if (!IsValid(QuestAsset) || !QuestAsset->QuestID.IsValid())
@@ -31,6 +35,7 @@ void UNQuestSubsystem::StartQuest(UNQuestInstance* Quest)
     ActiveQuests.Emplace(Quest);
     ActiveQuestsMap.Add(Quest->QuestID, Quest);
 
+    OnQuestCreated.Broadcast(Quest->QuestID);
     UE_LOG(LogNQuest, Log, TEXT("Starting Quest: %s"), *Quest->Title.ToString());
 }
 
@@ -50,6 +55,7 @@ bool UNQuestSubsystem::FinishQuest(const UNQuestInstance* Quest)
         }
     );
 
+    OnQuestCompleted.Broadcast(Quest->QuestID);
     UE_LOG(LogNQuest, Log, TEXT("Completed Quest: %s"), *Quest->Title.ToString());
 
     return true;
@@ -57,13 +63,13 @@ bool UNQuestSubsystem::FinishQuest(const UNQuestInstance* Quest)
 
 void UNQuestSubsystem::EvaluateQuests()
 {
-    for (auto It = ActiveQuests.CreateIterator(); It; ++It)
+    for (int32 i = ActiveQuests.Num() - 1; i >= 0; --i)
     {
-        UNQuestInstance* Quest = *It;
+        UNQuestInstance* Quest = ActiveQuests[i];
 
         if (!IsValid(Quest))
         {
-            It.RemoveCurrent();
+            ActiveQuests.RemoveAtSwap(i);
             continue;
         }
 
@@ -73,8 +79,17 @@ void UNQuestSubsystem::EvaluateQuests()
         {
             FinishQuest(Quest);
             ActiveQuestsMap.Remove(Quest->QuestID);
-            It.RemoveCurrent();
+            ActiveQuests.RemoveAtSwap(i);
             continue;
         }
     }
+}
+
+UNQuestInstance* UNQuestSubsystem::FindQuest(FGameplayTag Tag)
+{
+    if (ActiveQuestsMap.Contains(Tag))
+    {
+        return ActiveQuestsMap[Tag];
+    }
+    return nullptr;
 }

@@ -8,7 +8,7 @@ float UNConditionFloat::GetLeftHandSide_Implementation() const
     return 0.f;
 }
 
-bool UNConditionFloat::Evaluate_Implementation() const
+bool UNConditionFloat::EvaluateInternal_Implementation() const
 {
     const float Left = GetLeftHandSide();
     switch (Operator)

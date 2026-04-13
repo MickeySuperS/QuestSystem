@@ -23,6 +23,17 @@ public:
     FString DesignerDescription;
 #endif
 
-    UFUNCTION(Category="Condition", BlueprintNativeEvent, BlueprintCallable)
-    bool Evaluate() const;
+    UPROPERTY(Category = "Quest", BlueprintReadOnly, VisibleAnywhere)
+    bool bIsCompleted = false;
+
+public:
+
+    UFUNCTION(Category = "Quest", BlueprintNativeEvent, BlueprintCallable)
+    bool EvaluateInternal() const;
+
+    UFUNCTION(Category = "Quest", BlueprintCallable)
+    bool Evaluate();
+
+    UFUNCTION(Category = "Quest", BlueprintCallable)
+    bool IsCompleted() const;
 };
