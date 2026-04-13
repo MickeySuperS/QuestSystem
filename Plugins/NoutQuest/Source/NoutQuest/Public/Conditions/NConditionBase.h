@@ -43,4 +43,8 @@ public:
 
     UFUNCTION(Category = "Quest", BlueprintCallable)
     bool IsCompleted() const;
+
+    // Called On Demand to Refresh Conditions Data in UI
+    UFUNCTION(Category = "Quest", BlueprintCallable)
+    void CallOnConditionStateChanged() const;
 };

@@ -43,3 +43,12 @@ bool UNConditionBase::IsCompleted() const
 {
     return bIsCompleted;
 }
+
+void UNConditionBase::CallOnConditionStateChanged() const
+{
+    if (UGameInstance* GameInstance = GetWorld()->GetGameInstance())
+    {
+        UNQuestSubsystem* QuestSubsystem = GameInstance->GetSubsystem<UNQuestSubsystem>();
+        QuestSubsystem->OnConditionStateChanged.Broadcast(QuestID);
+    }
+}

@@ -10,7 +10,12 @@ float UNConditionFloat::EvaluateLeftHandSide_Implementation() const
 
 bool UNConditionFloat::EvaluateInternal_Implementation()
 {
+    const float oldLeftHandSide = LeftHandSide;
     LeftHandSide = EvaluateLeftHandSide();
+    if (oldLeftHandSide != LeftHandSide)
+    {
+        CallOnConditionStateChanged();
+    }
     switch (Operator)
     {
     case ENumericalCheck::Equal:
