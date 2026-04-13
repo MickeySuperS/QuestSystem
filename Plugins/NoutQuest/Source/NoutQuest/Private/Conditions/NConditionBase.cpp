@@ -8,6 +8,10 @@
 #include "GameplayTagContainer.h"
 //
 
+void UNConditionBase::InitCondition_Implementation()
+{
+}
+
 FText UNConditionBase::GetDisplayText_Implementation() const
 {
     return FText::FromString("Invalid Condition!, Override GetDisplayText()");
@@ -46,9 +50,5 @@ bool UNConditionBase::IsCompleted() const
 
 void UNConditionBase::CallOnConditionStateChanged() const
 {
-    if (UGameInstance* GameInstance = GetWorld()->GetGameInstance())
-    {
-        UNQuestSubsystem* QuestSubsystem = GameInstance->GetSubsystem<UNQuestSubsystem>();
-        QuestSubsystem->OnConditionStateChanged.Broadcast(QuestID);
-    }
+    OnConditionStateChanged.Broadcast();
 }

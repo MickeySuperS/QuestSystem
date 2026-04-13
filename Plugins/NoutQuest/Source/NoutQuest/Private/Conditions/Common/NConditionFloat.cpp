@@ -3,6 +3,14 @@
 #include "Conditions/Common/NConditionFloat.h"
 
 
+void UNConditionFloat::InitCondition_Implementation()
+{
+    if (Policy == ENPolicy::Accumulative)
+    {
+        CacheCurrent = EvaluateLeftHandSide();
+    }
+}
+
 float UNConditionFloat::EvaluateLeftHandSide_Implementation() const
 {
     return 0.f;
@@ -11,29 +19,29 @@ float UNConditionFloat::EvaluateLeftHandSide_Implementation() const
 bool UNConditionFloat::EvaluateInternal_Implementation()
 {
     const float oldLeftHandSide = LeftHandSide;
-    LeftHandSide = EvaluateLeftHandSide();
+    LeftHandSide = EvaluateLeftHandSide() - CacheCurrent;
     if (oldLeftHandSide != LeftHandSide)
     {
         CallOnConditionStateChanged();
     }
     switch (Operator)
     {
-    case ENumericalCheck::Equal:
+    case ENOperation::Equal:
         return LeftHandSide == RightHandSide;
         break;
-    case ENumericalCheck::NotEqual:
+    case ENOperation::NotEqual:
         return LeftHandSide != RightHandSide;
         break;
-    case ENumericalCheck::Less:
+    case ENOperation::Less:
         return LeftHandSide < RightHandSide;
         break;
-    case ENumericalCheck::LessOrEqual:
+    case ENOperation::LessOrEqual:
         return LeftHandSide <= RightHandSide;
         break;
-    case ENumericalCheck::Greater:
+    case ENOperation::Greater:
         return LeftHandSide > RightHandSide;
         break;
-    case ENumericalCheck::GreaterOrEqual:
+    case ENOperation::GreaterOrEqual:
         return LeftHandSide >= RightHandSide;
         break;
     default:

@@ -33,6 +33,7 @@ void UNQuestInstance::InitializeInstance(UObject* InOwner, UNQuestData& QuestTem
                     Condition,
                     this
                 );
+                NewCondition->InitCondition();
                 NewCondition->QuestID = QuestID;
 
                 NewObjective.Conditions.Add(NewCondition);

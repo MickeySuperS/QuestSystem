@@ -11,6 +11,8 @@
 
 #include "NConditionBase.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FConditionEvent);
+
 UCLASS(Abstract, BlueprintType, EditinlineNew, meta = (Category = "Conditions", DisplayName = "Condition Base"))
 class NOUTQUEST_API UNConditionBase : public UNObject
 {
@@ -24,13 +26,16 @@ public:
     FString DesignerDescription;
 #endif
 
-    UPROPERTY(Category = "Quest", BlueprintReadOnly, VisibleAnywhere)
+    UPROPERTY(Category = "Quest", BlueprintReadOnly)
     FGameplayTag QuestID;
 
-    UPROPERTY(Category = "Quest", BlueprintReadOnly, VisibleAnywhere)
+    UPROPERTY(Category = "Quest", BlueprintReadOnly)
     bool bIsCompleted = false;
 
 public:
+
+    UFUNCTION(Category = "Quest", BlueprintNativeEvent, BlueprintCallable)
+    void InitCondition();
 
     UFUNCTION(Category = "Quest", BlueprintNativeEvent, BlueprintCallable)
     FText GetDisplayText() const;
@@ -44,7 +49,10 @@ public:
     UFUNCTION(Category = "Quest", BlueprintCallable)
     bool IsCompleted() const;
 
-    // Called On Demand to Refresh Conditions Data in UI
     UFUNCTION(Category = "Quest", BlueprintCallable)
     void CallOnConditionStateChanged() const;
+
+    // Called On Demand to Refresh Conditions Data in UI
+	UPROPERTY(Category = "Quest", BlueprintAssignable)
+	FConditionEvent OnConditionStateChanged;
 };

@@ -95,12 +95,12 @@ struct NOUTQUEST_API FNQuestCompleted
 {
 	GENERATED_BODY()
 
-    UPROPERTY()
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     FGameplayTag QuestID;
     
-    UPROPERTY()
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     FText Title;
     
-    UPROPERTY()
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     FText Description;
 };

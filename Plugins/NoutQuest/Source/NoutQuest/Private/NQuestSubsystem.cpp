@@ -12,10 +12,10 @@
 
 UNQuestInstance *UNQuestSubsystem::CreateQuestInstance(UObject* Owner, UNQuestData *QuestAsset)
 {
-    if (!IsValid(QuestAsset) || !QuestAsset->QuestID.IsValid())
+    if (!IsValid(QuestAsset) || !QuestAsset->QuestID.IsValid() || ActiveQuestsMap.Contains(QuestAsset->QuestID))
     {
         //@@TODO(mickey): Get Asset Name
-        UE_LOG(LogNQuest, Log, TEXT("Failed to Create Quest: %s"), *QuestAsset->Title.ToString());
+        UE_LOG(LogNQuest, Error, TEXT("Failed to Create Quest: %s"), *QuestAsset->Title.ToString());
         return nullptr;
     }
 
@@ -92,4 +92,17 @@ UNQuestInstance* UNQuestSubsystem::FindQuest(FGameplayTag Tag)
         return ActiveQuestsMap[Tag];
     }
     return nullptr;
+}
+
+bool UNQuestSubsystem::FindQuestCompleted(FGameplayTag Tag, FNQuestCompleted& OutQuest)
+{
+    for(const FNQuestCompleted& quest : CompletedQuests)
+    {
+        if (quest.QuestID == Tag)
+        {
+            OutQuest = quest;
+            return true;
+        }
+    }
+    return false;
 }

@@ -50,9 +50,6 @@ public:
 	UPROPERTY(Category = "Quest", BlueprintAssignable)
 	FTaggedQuestEvent OnConditionCompleted;
 
-	UPROPERTY(Category = "Quest", BlueprintAssignable)
-	FTaggedQuestEvent OnConditionStateChanged;
-
 public:
     UFUNCTION(Category = "Quest", BlueprintCallable)
     UNQuestInstance* CreateQuestInstance(UObject* Owner, UNQuestData* QuestAsset);
@@ -68,4 +65,7 @@ public:
 
 	UFUNCTION(Category = "Quest", BlueprintCallable)
     UNQuestInstance* FindQuest(FGameplayTag Tag);
+
+	UFUNCTION(Category = "Quest", BlueprintCallable)
+    bool FindQuestCompleted(FGameplayTag Tag, FNQuestCompleted& OutQuest);
 };
