@@ -21,6 +21,10 @@
 		{
 			"Name": "NoutQuest",
 			"Enabled": true
+		},
+		{
+			"Name": "GameplayAbilities",
+			"Enabled": true
 		}
 	]
 }
