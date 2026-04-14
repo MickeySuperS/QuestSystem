@@ -6,6 +6,7 @@
 #include "Conditions/NConditionBase.h"
 #include "NQuestLog.h"
 #include "NQuestSubsystem.h"
+#include "Rewards/NRewardBase.h"
 
 /////////////////////// NQuestInstance ////////////////////////
 
@@ -41,6 +42,19 @@ void UNQuestInstance::InitializeInstance(UObject* InOwner, UNQuestData& QuestTem
         }
 
         Objectives.Add(NewObjective);
+    }
+
+    for (const TObjectPtr<UNRewardBase>& Reward : QuestTemplate.Rewards)
+    {
+        if (IsValid(Reward))
+        {
+            UNRewardBase* NewReward = DuplicateObject<UNRewardBase>(
+                Reward,
+                this
+            );
+
+            Rewards.Add(NewReward);
+        }
     }
 }
 

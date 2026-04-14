@@ -41,9 +41,10 @@ void UNQuestSubsystem::StartQuest(UNQuestInstance* Quest)
 
 bool UNQuestSubsystem::FinishQuest(const UNQuestInstance* Quest)
 {
-    for (const TObjectPtr<class UNRewardBase>& Reward : Quest->TemplateAsset->Rewards)
+    for (const TObjectPtr<class UNRewardBase>& Reward : Quest->Rewards)
     {
         if (!IsValid(Reward)) { continue; }
+
         Reward->GiveReward(Quest->Owner);
     }
 

@@ -62,6 +62,9 @@ public:
     TArray<struct FObjectiveData> Objectives;
 
     UPROPERTY(Category = "Quest", BlueprintReadOnly, VisibleAnywhere)
+    TArray<TObjectPtr<class UNRewardBase>> Rewards;
+
+    UPROPERTY(Category = "Quest", BlueprintReadOnly, VisibleAnywhere)
 	TObjectPtr<UNQuestData> TemplateAsset;
 
     UPROPERTY(Category = "Quest", BlueprintReadOnly, VisibleAnywhere)
