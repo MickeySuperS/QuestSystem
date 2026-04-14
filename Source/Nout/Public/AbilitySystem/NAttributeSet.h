@@ -62,7 +62,7 @@ private:
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxHealth, Meta = (AllowPrivateAccess = true))
 	FGameplayAttributeData MaxHealth;
 
-    UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_BaseDamage, Meta = (HideFromModifiers, AllowPrivateAccess = true))
+    UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_BaseDamage, Meta = (AllowPrivateAccess = true))
 	FGameplayAttributeData BaseDamage;
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Currency, Meta = (AllowPrivateAccess = true))
